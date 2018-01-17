@@ -44,6 +44,7 @@ namespace Individua.Util.ImageHelps
             }
             return randomCode;
         }
+
         /// <summary>
         /// 创建验证码的图片
         /// </summary>
