@@ -17,7 +17,7 @@ namespace Individua.Util
 {
     public static class GetCoodByAddress
     {
-        #region 根据位置获取坐标信息()
+        #region 获取高德地图数据 根据位置获取坐标信息()
         public static string getCoords(string patch)
         {
             string latlng = "";

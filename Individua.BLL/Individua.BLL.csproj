@@ -36,8 +36,9 @@
     <Reference Include="Aspose.Cells, Version=17.12.0.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
       <HintPath>..\packages\Aspose.Cells.17.12.0\lib\net40\Aspose.Cells.dll</HintPath>
     </Reference>
-    <Reference Include="Aspose.Imaging">
-      <HintPath>..\packages\lib\Aspose.Imaging.dll</HintPath>
+    <Reference Include="Aspose.Imaging, Version=2.7.0.0, Culture=neutral, PublicKeyToken=00725b1ceb58d0a9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\IndividuaWeb\packages\lib\Aspose.Imaging.dll</HintPath>
     </Reference>
     <Reference Include="Aspose.Pdf">
       <HintPath>..\packages\lib\Aspose.Pdf.dll</HintPath>

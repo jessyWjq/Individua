@@ -17,6 +17,8 @@ using Individua.Util;
 using System.Data;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
+using System.Data.OleDb;
+using System.Diagnostics;
 
 namespace Individua.Web.Controllers
 {
@@ -662,6 +664,133 @@ namespace Individua.Web.Controllers
             return File(VerificationHelper.CreateValidateGraphic(code), "image/Jpeg");
         }
         #endregion
+
+
+        #region 读取表格信息
+        public string ETLFORSYXXByJG(string patch)
+        {
+            string Patch = @patch;
+            DirectoryInfo folder = new DirectoryInfo(Patch);
+            foreach (FileInfo file in folder.GetFiles("*.xls"))
+            {
+                //获取excel名称
+                string FileName = file.FullName.Substring(file.FullName.LastIndexOf("\\") + 1);//最后一个\后的数据
+                string FileName1 = FileName.Substring(0, FileName.Length - 4);
+                string cjdate = DateTime.Now.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss");
+                //读取excel内容
+                string strConn = "Provider=Microsoft.Jet.OLEDB.4.0;" + "Data Source=" + file.FullName + ";" + "Extended Properties=Excel 8.0;";
+                OleDbConnection conn = new OleDbConnection(strConn);
+                conn.Open();
+                string strExcel = "";
+                OleDbDataAdapter myCommand = null;
+                DataSet ds = null;
+                strExcel = "select * from [sheet1$]";
+                myCommand = new OleDbDataAdapter(strExcel, strConn);
+                ds = new DataSet();
+                myCommand.Fill(ds, "table1");
+                string a = ds.Tables[0].ToJson();
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    string organguid = ds.Tables[0].Rows[i]["organguid"].ToString();
+                    string jgname = ds.Tables[0].Rows[i]["jgname"].ToString();
+                    string lat = ds.Tables[0].Rows[i]["lat"].ToString();
+                    string lng = ds.Tables[0].Rows[i]["lng"].ToString();
+                    string sjdw = ds.Tables[0].Rows[i]["sjdw"].ToString();
+                    string sjid = ds.Tables[0].Rows[i]["sjid"].ToString();
+                    string zhize = ds.Tables[0].Rows[i]["zhize"].ToString();
+                    string adress = ds.Tables[0].Rows[i]["adress"].ToString();
+                    string jibie = ds.Tables[0].Rows[i]["jibie"].ToString();
+                    string osid = ds.Tables[0].Rows[i]["osid"].ToString();
+                }
+            }
+            return  "成功";
+        }
+        #endregion
+
+        #region 危化品信息处理保存数据库
+        public string ETLFORWHPXX(string patch)
+        {
+            string Patch = @patch;
+            DirectoryInfo folder = new DirectoryInfo(Patch);
+            int m = 0;
+            string restr = "";
+            string weistr = "";
+            if (folder.GetFiles("*.docx").Length <= 0)
+            {
+                return "本路径下不存在 doc类型文档";
+            }
+            string saa = folder.GetFiles("*.docx").Length.ToString();
+            foreach (FileInfo file in folder.GetFiles("*.docx"))
+            {
+                //获取word文件名称
+                string FileName = file.FullName.Substring(file.FullName.LastIndexOf("\\") + 1);//最后一个\后的数据
+                string FileName1 = FileName.Substring(0, FileName.Length - 5);
+                //读取word内容
+                object oFileName = file.FullName;
+                object oReadOnly = true;
+                object oMissing = System.Reflection.Missing.Value;
+                Microsoft.Office.Interop.Word._Application oWord;
+                Microsoft.Office.Interop.Word._Document oDoc;
+                oWord = new Microsoft.Office.Interop.Word.Application();
+                //oWord.Visible = true;//只是为了方便观察
+                oDoc = oWord.Documents.Open(ref oFileName, ref oMissing, ref oReadOnly, ref oMissing, ref oMissing,
+                    ref oMissing, ref oMissing, ref oMissing, ref oMissing, ref oMissing, ref oMissing, ref oMissing);
+                int n = 0;
+                for (int tablePos = 1; tablePos <= oDoc.Tables.Count; tablePos++)
+                {
+                    Microsoft.Office.Interop.Word.Table nowTable = oDoc.Tables[tablePos];
+                    string sds = string.Format("第{0}/{1}个表:\n", tablePos, oDoc.Tables.Count);
+                    string text = nowTable.Cell(2, 1).Range.Text.Trim();
+                    if (text.IndexOf("1.物质的理化常数") >= 0)
+                    {
+                        int index1 = text.IndexOf("1.物质的理化常数:");
+                        int index2 = text.IndexOf("2.对环境的影响:");
+                        int index3 = text.IndexOf("3.现场应急监测方法:");
+                        int index4 = text.IndexOf("4.实验室监测方法:");
+                        int index5 = text.IndexOf("5.环境标准:");
+                        int index6 = text.IndexOf("6.应急处理处置方法:");
+                        string wzdlhcs = text.Substring(index1 + 10, index2 - (index1 + 10));
+                        string dhjdyx = text.Substring(index2 + 9, index3 - (index2 + 9));
+                        string xcyjjcff = text.Substring(index3 + 11, index4 - (index3 + 11));
+                        string sysjcff = text.Substring(index4 + 10, index5 - (index4 + 10));
+                        string hhjb = text.Substring(index5 + 7, index6 - (index5 + 7));
+                        string yjclczff = text.Substring(index6 + 11);                        
+                    }
+                    else
+                    {
+                        n++;
+                        if (n >= 2)
+                        {
+                            weistr += FileName1 + ":未添加||";
+                        }
+                    }
+                }
+                //杀死打开的word进程
+                Process myProcess = new Process();
+                Process[] wordProcess = Process.GetProcessesByName("winword");
+                try
+                {
+                    foreach (Process pro in wordProcess) //这里是找到那些没有界面的Word进程
+                    {
+                        IntPtr ip = pro.MainWindowHandle;
+
+                        string str = pro.MainWindowTitle; //发现程序中打开跟用户自己打开的区别就在这个属性
+                        //用户打开的str 是文件的名称，程序中打开的就是空字符串
+                        if (string.IsNullOrEmpty(str))
+                        {
+                            pro.Kill();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ex.ToString();
+                }
+            }
+            return m.ToString() + "条记录****||" + restr + "||不存在" + weistr;
+        }
+        #endregion
+
 
 
 
