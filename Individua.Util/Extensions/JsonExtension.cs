@@ -46,5 +46,15 @@ namespace Individua.Util.Extensions
         {
             return Json == null ? JObject.Parse("{}") : JObject.Parse(Json.Replace("&nbsp;", ""));
         }
+
+        /// <summary>
+        /// 字符串反转
+        /// </summary>
+        public static string Reverse(string str)
+        {
+            long jgcode = long.Parse(new string(str.Reverse().ToArray())); // 字符串反转成数字
+            str = new string(jgcode.ToString().Reverse().ToArray());// 数字反转成字符串
+            return str;
+        }
     }
 }
