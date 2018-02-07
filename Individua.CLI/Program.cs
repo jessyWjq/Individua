@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Individua.UtilLog;
+using System;
 using System.IO;
 
 namespace Individua.CLI
@@ -12,15 +13,17 @@ namespace Individua.CLI
             //ZipTest.ZipAddFile(@"D:\work\test\result.zip");
 
 
-            string directoryPath = @"D:\work\test";
-            DirectoryInfo directorySelected = new DirectoryInfo(directoryPath);
-            //ZipTest.Compress(directorySelected,directoryPath);
+            //string directoryPath = @"D:\work\test";
+            //DirectoryInfo directorySelected = new DirectoryInfo(directoryPath);
+            ////ZipTest.Compress(directorySelected,directoryPath);
 
-            foreach (FileInfo fileToDecompress in directorySelected.GetFiles("*.gz"))
-            {
-                ZipTest.Decompress(fileToDecompress);
-            }
+            //foreach (FileInfo fileToDecompress in directorySelected.GetFiles("*.gz"))
+            //{
+            //    ZipTest.Decompress(fileToDecompress);
+            //}
+            //LogHelper.WriteLog(typeof(Program),"sss");
 
+            NetLogHelpers.m_log.Error("sss",new Exception("sss"));
 
             Console.ReadLine();
         }

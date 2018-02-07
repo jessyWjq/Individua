@@ -79,6 +79,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Individua.UtilLog\Individua.UtilLog.csproj">
+      <Project>{3104DD4F-965C-46F6-9B9B-C6149A9D8866}</Project>
+      <Name>Individua.UtilLog</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Individua.Util\Individua.Util.csproj">
       <Project>{07047B51-05A6-46B5-8361-B1E53D6BD18E}</Project>
       <Name>Individua.Util</Name>

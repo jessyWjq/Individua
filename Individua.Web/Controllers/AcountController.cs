@@ -29,6 +29,7 @@ namespace Individua.Web.Controllers
         // GET: Acount
         public ActionResult Index()
         {
+
             return View();
         }
 
