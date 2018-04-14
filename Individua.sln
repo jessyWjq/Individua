@@ -31,9 +31,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Individua.StudioStyles", "I
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Individua.UtilLog", "Individua.UtilLog\Individua.UtilLog.csproj", "{3104DD4F-965C-46F6-9B9B-C6149A9D8866}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Individua.coreCLI", "Individua.coreCLI\Individua.coreCLI.csproj", "{29803371-66E0-401F-B206-2FDE55CFB0A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Individua.coreCLI", "Individua.coreCLI\Individua.coreCLI.csproj", "{29803371-66E0-401F-B206-2FDE55CFB0A9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Individua.coreWeb", "Individua.coreWeb\Individua.coreWeb.csproj", "{2516E62D-8AC4-4CC3-91B3-005E28200517}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Individua.coreWeb", "Individua.coreWeb\Individua.coreWeb.csproj", "{2516E62D-8AC4-4CC3-91B3-005E28200517}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Individua.CoreApp", "Individua.CoreApp\Individua.CoreApp.csproj", "{09B1AB13-6089-443D-A9B6-57AC22AD5283}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -105,6 +107,10 @@ Global
 		{2516E62D-8AC4-4CC3-91B3-005E28200517}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2516E62D-8AC4-4CC3-91B3-005E28200517}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2516E62D-8AC4-4CC3-91B3-005E28200517}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09B1AB13-6089-443D-A9B6-57AC22AD5283}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09B1AB13-6089-443D-A9B6-57AC22AD5283}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09B1AB13-6089-443D-A9B6-57AC22AD5283}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09B1AB13-6089-443D-A9B6-57AC22AD5283}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

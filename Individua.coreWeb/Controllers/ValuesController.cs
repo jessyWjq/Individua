@@ -12,10 +12,10 @@ namespace Individua.coreWeb.Controllers
     {
         private readonly IEnumerable<IDog> dogs;
 
-        public ValuesController(IEnumerable<IDog> _dogs)
-        {
-            dogs = _dogs;
-        }
+        //public ValuesController(IEnumerable<IDog> _dogs)
+        //{
+        //    dogs = _dogs;
+        //}
 
         // GET api/values
         [HttpGet]
